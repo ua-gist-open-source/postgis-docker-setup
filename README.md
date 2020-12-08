@@ -1,6 +1,4 @@
 # Assignment: PostGIS Docker Setup
-## Worth: 40 points
-## Due: 7 Days
 
 ## Objective: Run postgis in a docker container with sample data
 
