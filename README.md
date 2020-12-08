@@ -44,19 +44,19 @@ In a typical scenario, PostGIS would be serving data static and dynamic spatial 
 
 ### 1) Pull the postgis docker container.
 
-Lie geoserver, we will use the `kartoza` build:
+Lie geoserver, we will use the `mdillon` build:
 
 
 Pull the image as in the instructions to download the latest version:
 
 ```
-docker pull kartoza/postgis
+docker pull mdillon/postgis
 ```
 
 Run the docker container to give yourself a quick test that you have a working container:
 
 ```
-docker run -p 25432:5432 kartoza/geoserver
+docker run -p 25432:5432 mdillon/postgis
 ```
 
 This will run postgis in a container and expose the port `5432` from the docker container as `25432` on your host system (i.e., your Desktop or laptop). It will take a minute for postgresql to start up. Watch the terminal output for a message indicating that Postgresql is running; it will look like this: 
@@ -81,7 +81,7 @@ docker rm -f CONTAINER_ID
 ```
 Use `docker ps` to see its status and make sure it is not running.
 
-### 4) Run kartoza/geoserver with a local volume
+### 4) Run mdillon/geoserver with a local volume
 #### Pick a directory to use for this database for the rest of this semester
 This is pretty important because we are going to create a place on our local machines to store the data from our database. Create a dedicated directory for this. In my examples below I will use $DATA_DIR to indicate this directory. Note also that anything _AFTER_ the $DATA_DIR is very important for the postgis container because I found this mapping to be somewhat finnicky.
 
