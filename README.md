@@ -44,9 +44,6 @@ In a typical scenario, PostGIS would be serving data static and dynamic spatial 
 
 ### 1) Pull the postgis docker container.
 
-Lie geoserver, we will use the `mdillon` build:
-
-
 Pull the image as in the instructions to download the latest version:
 
 ```
@@ -70,7 +67,9 @@ Connect to localhost, port 5432 with a postgres host. Use  `pgadmin` for this cl
 
 We want to use a local directory to serve sample data through geoserver but in order to do that, we need to do a little housecleaning and prep first.
 
-### 3) Kill the running container from step 1). 
+We need to stop the existing container first. There are a few ways to do this. One is to use Docker Desktop to list the running containers and manually kill/remove it. Another is through the command line with `docker stop` and `docker rm`. For this assignment I'd like you to become more familiar with the command line. 
+
+#### Kill the existing container that is running from step 1
 To kill the running container, look at the running docker processes:
 ```
 docker ps
@@ -81,11 +80,12 @@ docker rm -f CONTAINER_ID
 ```
 Use `docker ps` to see its status and make sure it is not running.
 
-### 4) Run mdillon/geoserver with a local volume
 #### Pick a directory to use for this database for the rest of this semester
 This is pretty important because we are going to create a place on our local machines to store the data from our database. Create a dedicated directory for this. In my examples below I will use $DATA_DIR to indicate this directory. Note also that anything _AFTER_ the $DATA_DIR is very important for the postgis container because I found this mapping to be somewhat finnicky.
 
 #### Run docker with the volume mapping
+
+_In the following description, `$DATA_DIR` is a variable that refers to a directory of your choosing._
 
 Finally, run the docker container with the volume switch mapping your local directory to the postgis data directory on the container. The important switch here is `-v $DATA_DIR/postgres_data:/var/lib/postgresql` which maps the directory, `$DATA_DIR/postgres_data` on your local computer to the `/var/lib/postgresql` in the container, which is where postgres looks to find its configuration and data files. Your path will likely be different. If you wanted to use a shared network drive named `c:/postgres_data:/var/lib/postgresql`, for example, it might look like: `c:/postgres_data:/var/lib/postgresql`
 
@@ -93,16 +93,30 @@ Finally, run the docker container with the volume switch mapping your local dire
 docker run -d --name postgis -v $DATA_DIR/postgres_data/data:/var/lib/postgresql/data -p 25432:5432 mdillon/postgis
 ```
 Breaking that command down:
-- `docker run` is the root command
-- `-d` indicates to run in `detached` mode (in the background)
-- `--name postgis` is how we give the container a name. This will also be the hostname for this container _inside_ the `gist604b` docker network.
-- `-v $DATA_DIR/postgres_data/data:/var/lib/postgresql/data` allows us to mount a local host directory on the container and use it to store our database data. It is really two directories separated by a `:` with the host directory (on your computer) on the left and the container directory on the right. 
-  - `$DATA_DIR/postgres_data/data` the host directory - this should be a path on your machine. You do not need to creeate the `postgres_data` or `data` subdirectories as the container will initialize a clean database the first time it runs.
-  - `/var/lib/postgresql/data` is the directory in the container where postgresql will store database data. Don't touch this.
-- `-p 25432:5432` is a mapping between the host computer port `25432` and the container port `5432`. Since the container will run the database on `5432`, the port on the right shouldn't change. We can specify a port on the left to be the port that _we_ connect to when we try to connect to the database on our local machine. In this case, we are using `25432`. Why not use the default, `5432`? Exposing on this non-standard port means we can avoid having our docker container ghosted by another server running on your computer. This is not uncommon if you have prefiously installed postgresql on your computer as a service.
-- `mdillon/postgis` is the name of the container. See https://hub.docker.com/r/mdillon/postgis/ for image details.
+- `docker run` 
+  - is the root command
+- `-d` 
+  - indicates to run in `detached` mode (in the background)
+- `--name postgis` 
+  - is how we give the container a name. This will also be the hostname for this container _inside_ the `gist604b` docker network.
+- `-v $DATA_DIR/postgres_data/data:/var/lib/postgresql/data` 
+  - allows us to mount a local host directory on the container and use it to store our database data. It is really two directories separated by a `:` with the host directory (on your computer) on the left and the container directory on the right. 
+  - `$DATA_DIR/postgres_data/data` 
+    - the host directory - this should be a path on your machine. You do not need to creeate the `postgres_data` or `data` subdirectories as the container will initialize a clean database the first time it runs.
+  - `/var/lib/postgresql/data`
+    - the directory in the container where postgresql will store database data. Don't touch this.
+- `-p 25432:5432` 
+  - is a mapping between the host computer port `25432` and the container port `5432`. Since the container will run the database on `5432`, the port on the right shouldn't change. We can specify a port on the left to be the port that _we_ connect to when we try to connect to the database on our local machine. In this case, we are using `25432`. Why not use the default, `5432`? Exposing on this non-standard port means we can avoid having our docker container ghosted by another server running on your computer. This is not uncommon if you have prefiously installed postgresql on your computer as a service.
+- `mdillon/postgis`
+  - the name of the container. See https://hub.docker.com/r/mdillon/postgis/ for image details.
 
-### 5)Connect to database
+### 3) Check your $DATA_DIR
+In Explorer or Finder, navigate to `$DATA_DIR/postgres_data/data` and confirm that the directory exists (i.e., it was created by docker i the previous step) and that it is not empty.
+
+
+_Deliverable: Take a screenshot of your directory listing showing the path/folder name and contents. Name it `data_dir.png`_
+
+### 4)Connect to database
 Open pgAdmin. It may prompt you to set a master password. Set it to `postgres` and don't forget it. That's a password to access your pgAdmin GUI. That is NOT the password to the database.
 
 Connect to the local Postgresql database by Right clicking on `Servers` and selecting `New`.
@@ -117,7 +131,7 @@ Enter connection details:
 Now you should be connected and your pgadmin menu should look like this:
 ![screenshot_pg_admin_connected.png](screenshot_pgadmin_connected.png)
 
-_Deliverable: Take a screenshot of your PgAdmin screen showing the active connection_
+_Deliverable: Take a screenshot of your PgAdmin screen showing the active connection and name it `screenshot_connection.png`_
 
 ### 6) Turn in your work via GitHub Pull Request. 
 
