@@ -38,7 +38,7 @@ In a typical scenario, PostGIS would be serving data static and dynamic spatial 
 
 ## Prerequisites
 1) Docker is installed
-2) PgAdmin is installed (https://www.pgadmin.org/download/)
+2) A postgres client is installed - Recommendation: [DBeaver](https://dbeaver.io/download/) or [PgAdmin 4](https://www.pgadmin.org/download/)
 
 ## Assignment
 
@@ -63,7 +63,17 @@ This will run postgis in a container and expose the port `5432` from the docker 
 
 Connect to localhost, port 5432 with a postgres host. Use  `pgadmin` for this class.
 
-### 2) Configure postgis to store data on the host rather than the container.
+
+### 2) Create a table
+
+### 3) Test table persistence
+Restart docker container.
+Reconnect to database. 
+Is table there?
+Why not?
+
+
+### 4) Configure postgis to store data on the host rather than the container.
 
 We want to use a local directory to serve sample data through geoserver but in order to do that, we need to do a little housecleaning and prep first.
 
