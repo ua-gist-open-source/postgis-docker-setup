@@ -123,7 +123,6 @@ Breaking that command down:
 ### 3) Check your $DATA_DIR
 In Explorer or Finder, navigate to `$DATA_DIR/postgres_data/data` and confirm that the directory exists (i.e., it was created by docker i the previous step) and that it is not empty.
 
-
 _Deliverable: Take a screenshot of your directory listing showing the path/folder name and contents. Name it `data_dir.png`_
 
 ### 4)Connect to database
@@ -132,13 +131,13 @@ Open pgAdmin. It may prompt you to set a master password. Set it to `postgres` a
 Connect to the local Postgresql database by Right clicking on `Servers` and selecting `New`.
 ![screenshot_pg_admin_connected.png](screenshot_pgadmin_create_server.png)
 
-Enter `localhost:25432` for the name
+Enter `localhost:25432` for the name (VM users, enter `VM`)
 ![screenshot_pg_admin_connected.png](screenshot_pgadmin_connection_1.png)
 
-Enter connection details:
+Enter connection details (VM users, enter your VM IP address instead of `localhost`):
 ![screenshot_pg_admin_connected.png](screenshot_pgadmin_connection_2.png)
 
-Now you should be connected and your pgadmin menu should look like this:
+Now you should be connected and your pgadmin menu should look like this (_though without the "template_postgis" database_):
 ![screenshot_pg_admin_connected.png](screenshot_pgadmin_connected.png)
 
 _Deliverable: Take a screenshot of your PgAdmin screen showing the active connection and name it `screenshot_connection.png`_
