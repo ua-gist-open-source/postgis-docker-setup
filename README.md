@@ -38,7 +38,7 @@ In a typical scenario, PostGIS would be serving data static and dynamic spatial 
 
 ## Prerequisites
 1) Docker is installed
-2) A postgres client is installed - Recommendation: [DBeaver](https://dbeaver.io/download/) or [PgAdmin 4](https://www.pgadmin.org/download/)
+2) A postgres client is installed - Recommendation: [PgAdmin 4](https://www.pgadmin.org/download/)
 
 ## Assignment
 
