@@ -61,7 +61,7 @@ This will run postgis in a container and expose the port `5432` from the docker 
 2020-11-18 00:31:32.231 UTC [305] LOG:  database system is ready to accept connections
 ```
 
-Connect to localhost, port 5432 with a postgres host. Use  `pgadmin` for this class.
+With a postgres database client, connect to localhost, port 25432 with a postgres host. Use  `pgadmin` for this class.
 
 
 ### 2) Create a table
